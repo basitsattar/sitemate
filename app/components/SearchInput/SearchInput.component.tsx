@@ -6,15 +6,21 @@ type Props = {
   value: string;
   onChangeText: (text: string) => void;
   searchNews: () => void;
+  setShowHistory: (showHistory: boolean) => void;
 };
 
-const SearchInput = ({value, onChangeText, searchNews}: Props) => {
-  const handleKeyDown = (e: any) => {
-    console.log('HERE', e.nativeEvent.key);
-    if (e.nativeEvent.key === 'Enter') {
-      // searchNews();
+const SearchInput = ({
+  value,
+  onChangeText,
+  searchNews,
+  setShowHistory,
+}: Props) => {
+  const onSubmit = () => {
+    if (value) {
+      searchNews();
     }
   };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -23,10 +29,11 @@ const SearchInput = ({value, onChangeText, searchNews}: Props) => {
         style={styles.textInput}
         value={value}
         onChangeText={onChangeText}
-        onKeyPress={handleKeyDown}
-        onSubmitEditing={searchNews}
+        onSubmitEditing={onSubmit}
         keyboardType="default"
         returnKeyType="search"
+        onFocus={() => setShowHistory(true)}
+        onBlur={() => setShowHistory(false)}
       />
     </View>
   );

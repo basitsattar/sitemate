@@ -13,7 +13,7 @@ const NewsList = ({news}: Props) => {
       contentContainerStyle={styles.container}
       data={news}
       renderItem={({item}) => <NewsItem news={item} />}
-      keyExtractor={item => item.title}
+      keyExtractor={(item, i) => item.title + '_' + i}
     />
   );
 };
@@ -21,5 +21,5 @@ const NewsList = ({news}: Props) => {
 export default NewsList;
 
 const styles = StyleSheet.create({
-  container: {flexGrow: 1, paddingTop: 10},
+  container: {flexGrow: 1, paddingTop: 10, zIndex: 0},
 });

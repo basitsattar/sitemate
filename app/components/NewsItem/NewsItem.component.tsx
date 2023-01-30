@@ -22,15 +22,31 @@ type Props = {
 const NewsItem = ({news}: Props) => {
   return (
     <View style={styles.container}>
-      <Image source={{uri: news.urlToImage}} style={styles.image} />
+      <Image
+        source={{
+          uri: news.urlToImage
+            ? news.urlToImage
+            : 'https://placeholder.com/assets/images/150x150-2-500x500.png',
+        }}
+        style={styles.image}
+      />
 
       <Text style={styles.title}>{news.title}</Text>
       <Text style={styles.description}>
         {news.description.split(' ').slice(0, 20).join(' ').concat('...')}
       </Text>
-      <Text style={styles.date}>
-        {new Date(news.publishedAt).toDateString()}
-      </Text>
+      <View style={styles.footer}>
+        {news.source.name ? (
+          <Text style={styles.date}>
+            Source:
+            <Text style={styles.author}>{news.source.name}</Text>
+          </Text>
+        ) : null}
+
+        <Text style={styles.date}>
+          {new Date(news.publishedAt).toDateString()}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -52,6 +68,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
   },
+  author: {
+    color: Colors.black,
+    fontWeight: 'bold',
+  },
   date: {
     color: Colors.black,
     textAlign: 'right',
@@ -59,5 +79,10 @@ const styles = StyleSheet.create({
   },
   description: {
     color: Colors.black,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
